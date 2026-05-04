@@ -1,0 +1,57 @@
+# =====================================================
+# AnomalyDetector v2 — Requirements
+# CPU-friendly. Tested on Lenovo ThinkBook (no GPU).
+# =====================================================
+
+# --- Core ML ---
+numpy>=1.26.0
+pandas>=2.1.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+xgboost>=2.0.0
+
+# --- Deep Learning (CPU only) ---
+torch>=2.1.0
+# Note: install torch-geometric separately, see README setup notes
+torch-geometric>=2.4.0
+
+# --- Graph processing ---
+networkx>=3.2
+
+# --- Explainability ---
+shap>=0.44.0
+
+# --- Hyperparameter tuning ---
+optuna>=3.5.0
+
+# --- Vector DB / Embeddings ---
+chromadb>=0.4.22
+sentence-transformers>=2.3.0
+
+# --- LLM clients ---
+mistralai>=0.1.8        # Mistral API client
+httpx>=0.26.0           # for Ollama HTTP client
+ollama>=0.1.7           # optional convenience client
+
+# --- API / UI ---
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+streamlit>=1.31.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# --- Storage / Logging ---
+sqlalchemy>=2.0.0
+structlog>=24.1.0
+PyYAML>=6.0.1
+python-dotenv>=1.0.0
+
+# --- Visualization ---
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+
+# --- Testing ---
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0

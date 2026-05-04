@@ -1,0 +1,16 @@
+{
+  "is_synthetic": false,
+  "trained_at": "2026-05-03T19:31:05.475545",
+  "n_train_samples": 26905,
+  "available_models": [
+    "isolation_forest",
+    "autoencoder"
+  ],
+  "rag_counts": {
+    "typology_library": 10,
+    "regulatory": 8,
+    "case_history": 50,
+    "personal_notes": 0
+  },
+  "routing_accuracy_pct": 100.0
+}

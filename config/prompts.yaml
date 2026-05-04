@@ -1,0 +1,97 @@
+# LLM/SLM Prompt Templates
+# Used by Tier 2 (SLM) and Tier 3 (LLM) explainers
+
+system_prompt: |
+  You are a fraud detection analyst assistant. Your job is to:
+  1. Classify the typology of a flagged Bitcoin transaction by selecting from KNOWN TYPOLOGIES.
+  2. Write a clear, factual narrative explanation citing the provided evidence.
+  3. Output strictly valid JSON matching the requested schema.
+
+  CRITICAL RULES:
+  - You MUST select a typology from the provided list, or return "no_match" if none fit.
+  - You MUST NOT invent typology names not in the list.
+  - You MUST NOT make detection decisions (the ML system already decided).
+  - You MUST cite RAG document IDs for every claim you make.
+  - Your output MUST be valid JSON only, no preamble, no markdown.
+
+tier_2_user_prompt: |
+  Transaction ID: {transaction_id}
+
+  ML EVIDENCE:
+  - Ensemble score: {ensemble_score:.4f}
+  - Agreement count: {agreement_count}/4
+  - Top features (SHAP): {top_features}
+
+  STATISTICAL EVIDENCE:
+  - Mahalanobis distance: {mahalanobis:.4f} (p={p_value:.4f})
+  - Score percentile: {percentile:.1f}
+
+  KNOWN TYPOLOGIES:
+  {typology_options}
+
+  SIMILAR PAST CASES:
+  {case_history}
+
+  RELEVANT REGULATIONS:
+  {regulations}
+
+  ANALYST NOTES:
+  {personal_notes}
+
+  Output JSON with keys: typology_match, typology_confidence, supporting_evidence,
+  contradicting_evidence, narrative_explanation, recommended_action, rag_citations.
+
+tier_3_user_prompt: |
+  You are reasoning about a complex flagged transaction. Take time to consider whether
+  the evidence coheres into a known fraud pattern, or whether it might be a false positive.
+
+  Transaction ID: {transaction_id}
+
+  ML EVIDENCE:
+  - XGBoost: {p_xgb:.4f}, GraphSAGE: {p_gnn:.4f}
+  - Isolation Forest: {s_iso:.4f}, Autoencoder: {e_ae:.4f}
+  - Ensemble score: {ensemble_score:.4f}
+  - Agreement count: {agreement_count}/4
+  - Top features (SHAP): {top_features}
+
+  STATISTICAL EVIDENCE:
+  - Mahalanobis distance: {mahalanobis:.4f} (p={p_value:.4f})
+  - Score percentile: {percentile:.1f}
+
+  KNOWN TYPOLOGIES:
+  {typology_options}
+
+  SIMILAR PAST CASES:
+  {case_history}
+
+  RELEVANT REGULATIONS:
+  {regulations}
+
+  ANALYST NOTES (LLM-generated reflections from past cases):
+  {personal_notes}
+
+  Reason carefully. If the evidence is ambiguous or doesn't fit a known typology,
+  return "no_match" for typology_match and explain why in narrative_explanation.
+
+  Output JSON with keys: typology_match, typology_confidence, supporting_evidence,
+  contradicting_evidence, narrative_explanation, recommended_action, rag_citations.
+
+self_reflection_prompt: |
+  A flagged case has been confirmed as fraud by a human analyst. Your task is to extract
+  a structured "key lesson" that will help future LLM calls reason about similar cases.
+
+  CONFIRMED CASE:
+  - Transaction ID: {transaction_id}
+  - Typology: {typology}
+  - ML evidence: {ml_evidence}
+  - What RAG initially retrieved: {original_rag}
+  - What LLM originally said: {original_explanation}
+  - Analyst's actual notes: {analyst_notes}
+
+  Extract a structured lesson. Focus on what a future LLM should NOTICE about similar cases.
+
+  Output JSON with keys:
+  - topic: short topic label (e.g., "rapid_layering_detection")
+  - key_lesson: 1-2 sentences summarizing the meta-lesson
+  - indicators_to_watch: list of 3-5 concrete signals
+  - related_typologies: typologies this lesson applies to

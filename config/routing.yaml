@@ -1,0 +1,53 @@
+# =====================================================
+# Confidence Router Thresholds
+# Maps ensemble outputs to routing tiers
+# =====================================================
+
+tiers:
+  PASS:
+    description: Ensemble strongly disagrees flag — return as normal
+    rules:
+      agreement_count_max: 1
+    action: return_normal
+    use_llm: false
+
+  HIGH:
+    description: All detectors agree + strong RAG match — template only
+    rules:
+      agreement_count_min: 4
+      rag_match_score_min: 0.8
+    action: tier_1_template
+    use_llm: false
+
+  MEDIUM:
+    description: Strong consensus — local SLM with RAG context
+    rules:
+      agreement_count_min: 3
+      rag_match_score_min: 0.5
+    action: tier_2_slm
+    use_llm: true
+    llm_provider: ollama_slm
+
+  LOW:
+    description: Partial consensus — escalate to API LLM
+    rules:
+      agreement_count_min: 2
+    action: tier_3_llm
+    use_llm: true
+    llm_provider: mistral_primary
+
+  AMBIGUOUS:
+    description: Detectors disagree significantly — human review required
+    rules:
+      score_disagreement_min: 0.5
+    action: tier_3_llm_plus_human
+    use_llm: true
+    llm_provider: mistral_primary
+    flag_for_human: true
+
+# Per-model normalized thresholds (Optuna may override later)
+model_thresholds:
+  xgboost: 0.5
+  graphsage: 0.5
+  isolation_forest: 0.5
+  autoencoder: 0.5

@@ -1,0 +1,29 @@
+# Ensemble Weights — populated by Optuna during training
+# Initial uniform weights; tuned in Phase 2
+
+version: "0.1.0-initial"
+trained_at: null
+optimization_metric: pr_auc
+n_trials_run: 0
+
+weights:
+  xgboost: 0.25
+  graphsage: 0.25
+  isolation_forest: 0.25
+  autoencoder: 0.25
+
+# Calibrated thresholds per model
+thresholds:
+  xgboost: 0.5
+  graphsage: 0.5
+  isolation_forest: 0.5
+  autoencoder: 0.5
+
+# Min-max normalization parameters per model (computed from validation set)
+normalization:
+  isolation_forest:
+    min: -0.5
+    max: 0.5
+  autoencoder:
+    min: 0.0
+    max: 1.0

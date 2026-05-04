@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-05-03T08:30:47.762576",
+  "n_eval_cases": 50,
+  "tier_distribution": {
+    "PASS": 10,
+    "HIGH": 10,
+    "MEDIUM": 10,
+    "LOW": 10,
+    "AMBIGUOUS": 10
+  },
+  "routing": {
+    "total": 50,
+    "correct": 50,
+    "accuracy": 1.0,
+    "per_tier_accuracy": {
+      "PASS": 1.0,
+      "HIGH": 1.0,
+      "MEDIUM": 1.0,
+      "LOW": 1.0,
+      "AMBIGUOUS": 1.0
+    },
+    "confusion": {
+      "PASS": {
+        "PASS": 10
+      },
+      "HIGH": {
+        "HIGH": 10
+      },
+      "MEDIUM": {
+        "MEDIUM": 10
+      },
+      "LOW": {
+        "LOW": 10
+      },
+      "AMBIGUOUS": {
+        "AMBIGUOUS": 10
+      }
+    },
+    "n_mismatches": 0,
+    "mismatches": []
+  },
+  "llm_rubric": {
+    "status": "not_run",
+    "note": "LLM rubric requires trained models + Mistral API key + Ollama. Run `python -m src.evaluation.run_evaluation` after training to populate."
+  }
+}

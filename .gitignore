@@ -1,0 +1,107 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Virtual environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.env.local
+.env.*.local
+
+# ── Secrets & environment ────────────────────────────────────────────────────
+.env
+!.env.example
+
+# ── Testing & coverage ───────────────────────────────────────────────────────
+.pytest_cache/
+.cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+nosetests.xml
+*.cover
+junit*.xml
+
+# ── Type checking / linting ──────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pytype/
+
+# ── Jupyter ──────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Runtime artifacts & databases ────────────────────────────────────────────
+artifacts/chromadb/
+artifacts/*.db
+artifacts/*.sqlite
+artifacts/*.sqlite3
+
+# ── Generated reports ────────────────────────────────────────────────────────
+reports/evaluation/
+reports/backtest_results/
+reports/visualizations/
+
+# ── Trained model files ──────────────────────────────────────────────────────
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.h5
+*.hdf5
+
+# ── Processed / generated data ───────────────────────────────────────────────
+data/processed/
+data/raw/
+*.csv
+!data/sample*.csv
+
+# ── Logs ────────────────────────────────────────────────────────────────────
+*.log
+logs/
+*.out
+
+# ── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ── IDEs & editors ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ── Optuna / MLflow / experiment tracking ────────────────────────────────────
+optuna.db
+mlruns/
+mlflow.db
+*.mlflow
+
+# ── Misc ─────────────────────────────────────────────────────────────────────
+*.bak
+*.tmp
+*.temp

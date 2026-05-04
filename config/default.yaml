@@ -1,0 +1,102 @@
+# AnomalyDetector v2 — Default Configuration
+# All paths relative to project root
+
+paths:
+  data_raw: data/raw/elliptic_bitcoin_dataset
+  data_processed: data/processed
+  data_splits: data/splits
+  models: models
+  artifacts: artifacts
+  reports: reports
+  chromadb: artifacts/chromadb
+  audit_db: artifacts/audit.db
+
+# Temporal split configuration
+splits:
+  train_time_steps: [1, 30]
+  val_time_steps: [31, 40]
+  test_time_steps: [41, 49]
+
+# Detection model config
+detection:
+  xgboost:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.1
+    scale_pos_weight: 50
+    random_state: 42
+  isolation_forest:
+    n_estimators: 100
+    contamination: 0.05
+    random_state: 42
+  autoencoder:
+    hidden_dim_1: 128
+    hidden_dim_2: 32
+    epochs: 50
+    batch_size: 256
+    learning_rate: 0.001
+  gnn:
+    hidden_channels: 128
+    num_layers: 2
+    dropout: 0.5
+    epochs: 30
+    learning_rate: 0.001
+    weight_decay: 0.0005
+
+# Ensemble combiner
+ensemble:
+  optuna_trials: 50
+  optimization_metric: pr_auc
+
+# Statistical validation
+validation:
+  mahalanobis_p_threshold: 0.001
+  shap_top_k: 3
+
+# RAG configuration
+rag:
+  embedding_model: all-MiniLM-L6-v2
+  embedding_dim: 384
+  collections:
+    typology_library:
+      top_k: 3
+      weight: 1.5
+    case_history:
+      top_k: 3
+      weight: 1.0
+    regulatory:
+      top_k: 2
+      weight: 1.0
+    personal_notes:
+      top_k: 2
+      weight: 1.2
+  min_similarity_threshold: 0.4
+  max_final_docs: 7
+
+# LLM configuration
+llm:
+  tier_2_provider: ollama
+  tier_2_model: qwen2.5:1.5b
+  tier_3_primary: mistral_small
+  tier_3_fallback_1: mistral_medium
+  tier_3_fallback_2: ollama_qwen3b
+  mistral_small_model: mistral-small-latest
+  mistral_medium_model: mistral-medium-latest
+  max_tokens: 1024
+  temperature: 0.1
+
+# Backtesting
+backtesting:
+  rolling_windows:
+    - {train: [1, 25], test: [26, 30]}
+    - {train: [1, 30], test: [31, 35]}
+    - {train: [1, 35], test: [36, 40]}
+    - {train: [1, 40], test: [41, 49]}
+  cost_fn: 100.0
+  cost_fp: 1.0
+
+# Logging
+logging:
+  level: INFO
+  format: json
+  audit_trail: true
